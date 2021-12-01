@@ -1,0 +1,296 @@
+#include "MIPSgen.h"
+#include "y.tab.h"
+
+RegDesc rdesc[] = {
+		    {"zero",0,false,zro,UNKNOWN,temp,0,""},
+		    {"at",1,false,assembler,UNKNOWN,temp,0,""},
+		    {"v0",0,false,evaluation,UNKNOWN,temp,0,""},
+		    {"v1",1,false,evaluation,UNKNOWN,temp,0,""},
+		    {"a0",0,false,arg,UNKNOWN,temp,0,""},
+		    {"a1",1,false,arg,UNKNOWN,temp,0,""},
+		    {"a2",2,false,arg,UNKNOWN,temp,0,""},
+		    {"a3",3,false,arg,UNKNOWN,temp,0,""},
+		    {"t0",0,false,tmp,UNKNOWN,temp,0,""},
+		    {"t1",1,false,tmp,UNKNOWN,temp,0,""},
+		    {"t2",2,false,tmp,UNKNOWN,temp,0,""},
+		    {"t3",3,false,tmp,UNKNOWN,temp,0,""},
+		    {"t4",4,false,tmp,UNKNOWN,temp,0,""},
+		    {"t5",5,false,tmp,UNKNOWN,temp,0,""},
+		    {"t6",6,false,tmp,UNKNOWN,temp,0,""},
+		    {"t7",7,false,tmp,UNKNOWN,temp,0,""},
+		    {"t8",8,false,tmp,UNKNOWN,temp,0,""},
+		    {"t9",9,false,tmp,UNKNOWN,temp,0,""},
+		    {"s0",0,false,stmp,UNKNOWN,temp,0,""},
+		    {"s1",1,false,stmp,UNKNOWN,temp,0,""},
+		    {"s2",2,false,stmp,UNKNOWN,temp,0,""},
+		    {"s3",3,false,stmp,UNKNOWN,temp,0,""},
+		    {"s4",4,false,stmp,UNKNOWN,temp,0,""},
+		    {"s5",5,false,stmp,UNKNOWN,temp,0,""},
+		    {"s6",6,false,stmp,UNKNOWN,temp,0,""},
+		    {"s7",7,false,stmp,UNKNOWN,temp,0,""},
+		    {"k0",0,false,kernel,UNKNOWN,temp,0,""},
+		    {"k1",1,false,kernel,UNKNOWN,temp,0,""},
+		    {"gp",1,false,gp,UNKNOWN,temp,0,""},
+		    {"sp",1,false,sp,UNKNOWN,temp,0,""},
+		    {"fp",1,false,fp,UNKNOWN,temp,0,""},
+		    {"ra",1,false,ra,UNKNOWN,temp,0,""},
+		    {"",0,false,invalid,UNKNOWN,temp,0,""},
+		  }; 
+
+
+
+OperMap opMap []  = { 
+                      {ADD,"add"},
+		      {0,""}
+		    };
+
+MipsGen::MipsGen()
+{
+  head = NULL;
+  tail = NULL;
+}
+
+
+void MipsGen::generateMIPS(IR_Node *ir)
+{
+
+ IR_Node *tmp =ir;
+
+ while(tmp){
+
+ switch(tmp->type){
+   case regular:
+     gcRegularIns(tmp);
+     break;
+   case lbl:
+     gcLabelIns(tmp);
+     break;
+   case branch:
+   default:
+     ;
+ }
+
+   tmp = tmp->next;//handle next IR 
+ }
+
+}
+
+void MipsGen::gcLabelIns(IR_Node *ir)
+{
+ if(!ir){
+   cout << "IR Empty\n";
+   return;
+ }
+
+ addIns(ir->label+":","","","");
+ 
+}
+
+
+void MipsGen::gcRegularIns(IR_Node *ir)
+{
+ Quadruple *q;
+ int op=0;
+ int numOps=0;
+
+ if(!ir){
+   cout << "IR Empty\n";
+   return;
+ }
+
+ q = ir->q;  //get the quaruple.
+ if(!q){
+   cout << "Quadruple Empty\n";
+   return;
+ }
+  
+  if(q->opInfo){
+     op = q->opInfo->op;
+     numOps = q->opInfo->numOpers;
+  }else{
+
+  }
+
+  if(numOps == 2){
+     switch(op){
+      case ADD:
+       gcBinaryOp(q);
+       break;
+      default:
+       ;
+     }
+  }else{
+
+  }
+
+}
+
+bool MipsGen::gcBinaryOp(Quadruple *q)
+{
+ string opcode;
+ string arg1,arg2,res;
+
+ if(!q || !q->operand1 || !q->operand2 || !q->res || !q->opInfo){
+   cout << "Quadruple Invalid\n";
+   return false;
+ }
+ opcode = getOpCode(q->opInfo->op);
+ if(q->operand1->type == int_cons || q->operand2->type == int_cons){
+        opcode += "i";
+ }
+
+ gcOperand(q->operand1,arg1);
+ gcOperand(q->operand2,arg2);
+ 
+ if(q->res->type == temp){ 
+   if(q->operand1->type == iden)
+     res = arg1;
+   else if(q->operand2->type == iden)
+     res = arg2;
+   else 
+     gcOperand(q->res,res);
+
+   if(q->operand1->type == int_cons && q->operand2->type == int_cons){
+     addIns("li",res,arg1,"");
+     arg1=res;
+   }
+ }
+ 
+ addIns(opcode,res,arg1,arg2);
+ return true;
+}
+
+
+string MipsGen::getOpCode(int op)
+{
+  int i=0;
+  for(i=0;opMap[i].op != 0;i++){
+     if(opMap[i].op == op){
+       return opMap[i].mipsOpCode;
+     }
+  }
+
+  if(opMap[i].op == 0){
+  	cout << "Error finding opcode\n";
+  	return opMap[i].mipsOpCode;
+  }
+}
+
+
+bool MipsGen::gcOperand(Operand *op,string& res)
+{
+ RegDesc *r;
+ string oper;
+ string arg1;
+ string arg2;
+ string arg3;
+ char constVal[128];
+ 
+ if(!op){
+    cout << "Invalid operand\n";
+    res = "";
+    return false; 
+ }
+
+
+ switch(op->type){
+   case iden:
+	  r = getReg(tmp);
+	  if(r){
+	   arg1 = r->name;
+           oper = "lw";
+	   arg2 = op->name;
+           addIns(oper,arg1,arg2,arg3);
+	   res = arg1;
+          }
+	break;
+   case temp:
+	if(!op->result){
+            r = findReg(tmp,op->tempId);
+	    if(r){
+               res = r->name;
+	    }
+	}else{
+	    r = getReg(tmp);
+	    if(r){
+	      res = r->name;
+              r->setBusy();
+	      r->assign(op->type,op->tempId,op->name);
+            }
+         }
+        break;
+   case int_cons:
+         sprintf(constVal,"%d",op->tempId);
+	 res = constVal;
+	 break;
+ }
+
+ return true;
+}
+
+RegDesc *MipsGen::findReg(RegType type,int contentId)
+{
+  int i=0;
+  for(i=0;rdesc[i].rType != invalid;i++){
+      if(rdesc[i].rType == type){
+         if(rdesc[i].matchContent(contentId)){
+	   return &rdesc[i];
+	   }
+      }
+  }
+
+  cout << "Find Reg not available\n";
+  return NULL;
+}
+
+
+RegDesc *MipsGen::getReg(RegType type)
+{
+  int i=0;
+  for(i=0;rdesc[i].rType != invalid;i++){
+      if(rdesc[i].rType == type){
+         if(rdesc[i].inuse == false){
+	   return &rdesc[i];
+         }
+      }
+  }
+
+  cout << "Reg not available\n";
+  return NULL;
+}
+
+bool MipsGen::addIns(string oper,string arg1,string arg2,string arg3)
+{
+ string ins = oper + "\t";
+ if(arg1 != "")
+    ins += arg1;
+ if(arg2 != "")
+    ins += "," + arg2;
+ if(arg3 != "")
+    ins += "," + arg3;
+
+ if(head && tail){
+    tail->next = new Mips_asmbly();
+    tail->next->prev = tail;
+    tail = tail->next;
+ }else{
+    head = new Mips_asmbly();
+    tail = head;
+ }
+
+ tail->ins = ins;
+ return true;
+}
+
+void MipsGen::print()
+{
+  Mips_asmbly *tmp = head;
+
+  cout << "-------------------MIPS Code----------------------" << endl;
+  while(tmp){
+    cout << tmp->ins << endl;
+    tmp = tmp->next;
+  }
+  cout << "--------------------------------------------------" << endl;
+
+}

@@ -1,0 +1,5134 @@
+
+state 0
+	$accept : _translation_unit $end 
+
+	MUL  shift 28
+	Id  shift 30
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 19
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 29
+	translation_unit  goto 1
+	top_level_decl  goto 2
+	decl  goto 3
+	declaration_specifiers  goto 5
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	declarator  goto 8
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+	function_definition  goto 4
+	function_def_specifier  goto 6
+
+state 1
+	$accept :  translation_unit_$end 
+	translation_unit :  translation_unit_top_level_decl 
+
+	$end  accept
+	MUL  shift 28
+	Id  shift 30
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 19
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 29
+	top_level_decl  goto 31
+	decl  goto 3
+	declaration_specifiers  goto 5
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	declarator  goto 8
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+	function_definition  goto 4
+	function_def_specifier  goto 6
+
+state 2
+	translation_unit :  top_level_decl_    (1)
+
+	.  reduce 1
+
+
+state 3
+	top_level_decl :  decl_    (3)
+
+	.  reduce 3
+
+
+state 4
+	top_level_decl :  function_definition_    (4)
+
+	.  reduce 4
+
+
+state 5
+	decl :  declaration_specifiers_initialized_declarator_list SEMICOLON 
+	function_def_specifier :  declaration_specifiers_declarator 
+	function_def_specifier :  declaration_specifiers_declarator declaration_list 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 19
+	.  error
+
+	identifier  goto 29
+	initialized_declarator_list  goto 32
+	initialized_declarator  goto 34
+	declarator  goto 33
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+
+state 6
+	function_definition :  function_def_specifier_compound_statement 
+
+	OPEN_CBRACE  shift 36
+	.  error
+
+	compound_statement  goto 35
+
+state 7
+	declaration_specifiers :  type_specifier_    (6)
+	declaration_specifiers :  type_specifier_declaration_specifiers 
+
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	.  reduce 6
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	declaration_specifiers  goto 37
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+
+state 8
+	function_def_specifier :  declarator_    (137)
+	function_def_specifier :  declarator_declaration_list 
+
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	.  reduce 137
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	decl  goto 39
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	declaration_list  goto 38
+
+state 9
+	type_specifier :  int_type_specifier_    (8)
+
+	.  reduce 8
+
+
+state 10
+	type_specifier :  void_type_specifier_    (9)
+
+	.  reduce 9
+
+
+state 11
+	declarator :  pointer_declarator_    (37)
+
+	.  reduce 37
+
+
+state 12
+	declarator :  direct_declarator_    (38)
+	array_declarator :  direct_declarator_OPEN_BRACKET CLOSE_BRACKET 
+	array_declarator :  direct_declarator_OPEN_BRACKET constant_expr CLOSE_BRACKET 
+	array_declarator :  direct_declarator_OPEN_BRACKET MUL 
+	array_declarator :  direct_declarator_OPEN_BRACKET array_size_expr CLOSE_BRACKET 
+	function_declarator :  direct_declarator_OPEN_BRACE parameter_type_list CLOSE_BRACE 
+
+	OPEN_BRACE  shift 42
+	OPEN_BRACKET  shift 41
+	.  reduce 38
+
+
+state 13
+	int_type_specifier :  signed_type_specifier_    (10)
+
+	.  reduce 10
+
+
+state 14
+	int_type_specifier :  unsigned_type_specifier_    (11)
+
+	.  reduce 11
+
+
+state 15
+	int_type_specifier :  char_type_specifier_    (12)
+
+	.  reduce 12
+
+
+state 16
+	void_type_specifier :  VOID_    (13)
+
+	.  reduce 13
+
+
+state 17
+	pointer_declarator :  pointer_direct_declarator 
+
+	Id  shift 30
+	OPEN_BRACE  shift 19
+	.  error
+
+	identifier  goto 29
+	direct_declarator  goto 43
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+
+state 18
+	direct_declarator :  simple_declarator_    (42)
+
+	.  reduce 42
+
+
+state 19
+	direct_declarator :  OPEN_BRACE_declarator CLOSE_BRACE 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 19
+	.  error
+
+	identifier  goto 29
+	declarator  goto 44
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+
+state 20
+	direct_declarator :  array_declarator_    (44)
+
+	.  reduce 44
+
+
+state 21
+	direct_declarator :  function_declarator_    (45)
+
+	.  reduce 45
+
+
+22: shift/reduce conflict (shift 45, red'n 24) on INT
+state 22
+	signed_type_specifier :  SHORT_INT 
+	signed_type_specifier :  SHORT_    (24)
+
+	INT  shift 45
+	.  reduce 24
+
+
+23: shift/reduce conflict (shift 46, red'n 19) on SHORT
+23: shift/reduce conflict (shift 49, red'n 19) on CHAR
+23: shift/reduce conflict (shift 47, red'n 19) on INT
+23: shift/reduce conflict (shift 48, red'n 19) on LONG
+state 23
+	signed_type_specifier :  SIGNED_SHORT 
+	signed_type_specifier :  SIGNED_SHORT INT 
+	signed_type_specifier :  SIGNED_INT 
+	signed_type_specifier :  SIGNED_    (19)
+	signed_type_specifier :  SIGNED_LONG 
+	signed_type_specifier :  SIGNED_LONG INT 
+	char_type_specifier :  SIGNED_CHAR 
+
+	SHORT  shift 46
+	CHAR  shift 49
+	INT  shift 47
+	LONG  shift 48
+	.  reduce 19
+
+
+state 24
+	signed_type_specifier :  INT_    (17)
+
+	.  reduce 17
+
+
+25: shift/reduce conflict (shift 50, red'n 20) on INT
+state 25
+	signed_type_specifier :  LONG_    (20)
+	signed_type_specifier :  LONG_INT 
+
+	INT  shift 50
+	.  reduce 20
+
+
+26: shift/reduce conflict (shift 51, red'n 25) on SHORT
+26: shift/reduce conflict (shift 54, red'n 25) on CHAR
+26: shift/reduce conflict (shift 52, red'n 25) on INT
+26: shift/reduce conflict (shift 53, red'n 25) on LONG
+state 26
+	unsigned_type_specifier :  UNSIGNED_    (25)
+	unsigned_type_specifier :  UNSIGNED_SHORT INT 
+	unsigned_type_specifier :  UNSIGNED_SHORT 
+	unsigned_type_specifier :  UNSIGNED_INT 
+	unsigned_type_specifier :  UNSIGNED_LONG 
+	unsigned_type_specifier :  UNSIGNED_LONG INT 
+	char_type_specifier :  UNSIGNED_CHAR 
+
+	SHORT  shift 51
+	CHAR  shift 54
+	INT  shift 52
+	LONG  shift 53
+	.  reduce 25
+
+
+state 27
+	char_type_specifier :  CHAR_    (31)
+
+	.  reduce 31
+
+
+state 28
+	pointer :  MUL_    (40)
+	pointer :  MUL_pointer 
+
+	MUL  shift 28
+	.  reduce 40
+
+	pointer  goto 55
+
+state 29
+	simple_declarator :  identifier_    (46)
+
+	.  reduce 46
+
+
+state 30
+	identifier :  Id_    (144)
+
+	.  reduce 144
+
+
+state 31
+	translation_unit :  translation_unit top_level_decl_    (2)
+
+	.  reduce 2
+
+
+state 32
+	decl :  declaration_specifiers initialized_declarator_list_SEMICOLON 
+	initialized_declarator_list :  initialized_declarator_list_COMMA initialized_declarator 
+
+	COMMA  shift 57
+	SEMICOLON  shift 56
+	.  error
+
+
+state 33
+	initialized_declarator :  declarator_    (36)
+	function_def_specifier :  declaration_specifiers declarator_    (138)
+	function_def_specifier :  declaration_specifiers declarator_declaration_list 
+
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_CBRACE  reduce 138
+	.  reduce 36
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	decl  goto 39
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	declaration_list  goto 58
+
+state 34
+	initialized_declarator_list :  initialized_declarator_    (34)
+
+	.  reduce 34
+
+
+state 35
+	function_definition :  function_def_specifier compound_statement_    (136)
+
+	.  reduce 136
+
+
+state 36
+	compound_statement :  OPEN_CBRACE_declaration_or_statement_list CLOSE_CBRACE 
+	compound_statement :  OPEN_CBRACE_CLOSE_CBRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	SHORT  shift 22
+	GOTO  shift 84
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	IF  shift 88
+	CHAR  shift 27
+	INT  shift 24
+	CONTINUE  shift 82
+	LONG  shift 25
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	CLOSE_CBRACE  shift 60
+	SEMICOLON  shift 85
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 93
+	decl  goto 62
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 63
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	declaration_or_statement  goto 61
+	declaration_or_statement_list  goto 59
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 37
+	declaration_specifiers :  type_specifier declaration_specifiers_    (7)
+
+	.  reduce 7
+
+
+state 38
+	function_def_specifier :  declarator declaration_list_    (139)
+	declaration_list :  declaration_list_decl 
+
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	.  reduce 139
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	decl  goto 141
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+
+state 39
+	declaration_list :  decl_    (190)
+
+	.  reduce 190
+
+
+state 40
+	decl :  declaration_specifiers_initialized_declarator_list SEMICOLON 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 19
+	.  error
+
+	identifier  goto 29
+	initialized_declarator_list  goto 32
+	initialized_declarator  goto 34
+	declarator  goto 142
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+
+state 41
+	array_declarator :  direct_declarator OPEN_BRACKET_CLOSE_BRACKET 
+	array_declarator :  direct_declarator OPEN_BRACKET_constant_expr CLOSE_BRACKET 
+	array_declarator :  direct_declarator OPEN_BRACKET_MUL 
+	array_declarator :  direct_declarator OPEN_BRACKET_array_size_expr CLOSE_BRACKET 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 145
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACKET  shift 143
+	.  error
+
+	identifier  goto 149
+	constant_expr  goto 144
+	conditional_expr  goto 147
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	assignment_expr  goto 148
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	array_size_expr  goto 146
+
+state 42
+	function_declarator :  direct_declarator OPEN_BRACE_parameter_type_list CLOSE_BRACE 
+
+	MUL  shift 28
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 157
+	OPEN_BRACKET  shift 158
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	declaration_specifiers  goto 153
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	pointer  goto 155
+	parameter_decl  goto 152
+	parameter_list  goto 151
+	parameter_type_list  goto 150
+	abstract_decl  goto 154
+	direct_abstract_decl  goto 156
+
+state 43
+	pointer_declarator :  pointer direct_declarator_    (39)
+	array_declarator :  direct_declarator_OPEN_BRACKET CLOSE_BRACKET 
+	array_declarator :  direct_declarator_OPEN_BRACKET constant_expr CLOSE_BRACKET 
+	array_declarator :  direct_declarator_OPEN_BRACKET MUL 
+	array_declarator :  direct_declarator_OPEN_BRACKET array_size_expr CLOSE_BRACKET 
+	function_declarator :  direct_declarator_OPEN_BRACE parameter_type_list CLOSE_BRACE 
+
+	OPEN_BRACE  shift 42
+	OPEN_BRACKET  shift 41
+	.  reduce 39
+
+
+state 44
+	direct_declarator :  OPEN_BRACE declarator_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 159
+	.  error
+
+
+state 45
+	signed_type_specifier :  SHORT INT_    (14)
+
+	.  reduce 14
+
+
+46: shift/reduce conflict (shift 160, red'n 15) on INT
+state 46
+	signed_type_specifier :  SIGNED SHORT_    (15)
+	signed_type_specifier :  SIGNED SHORT_INT 
+
+	INT  shift 160
+	.  reduce 15
+
+
+state 47
+	signed_type_specifier :  SIGNED INT_    (18)
+
+	.  reduce 18
+
+
+48: shift/reduce conflict (shift 161, red'n 22) on INT
+state 48
+	signed_type_specifier :  SIGNED LONG_    (22)
+	signed_type_specifier :  SIGNED LONG_INT 
+
+	INT  shift 161
+	.  reduce 22
+
+
+state 49
+	char_type_specifier :  SIGNED CHAR_    (33)
+
+	.  reduce 33
+
+
+state 50
+	signed_type_specifier :  LONG INT_    (21)
+
+	.  reduce 21
+
+
+51: shift/reduce conflict (shift 162, red'n 27) on INT
+state 51
+	unsigned_type_specifier :  UNSIGNED SHORT_INT 
+	unsigned_type_specifier :  UNSIGNED SHORT_    (27)
+
+	INT  shift 162
+	.  reduce 27
+
+
+state 52
+	unsigned_type_specifier :  UNSIGNED INT_    (28)
+
+	.  reduce 28
+
+
+53: shift/reduce conflict (shift 163, red'n 29) on INT
+state 53
+	unsigned_type_specifier :  UNSIGNED LONG_    (29)
+	unsigned_type_specifier :  UNSIGNED LONG_INT 
+
+	INT  shift 163
+	.  reduce 29
+
+
+state 54
+	char_type_specifier :  UNSIGNED CHAR_    (32)
+
+	.  reduce 32
+
+
+state 55
+	pointer :  MUL pointer_    (41)
+
+	.  reduce 41
+
+
+state 56
+	decl :  declaration_specifiers initialized_declarator_list SEMICOLON_    (5)
+
+	.  reduce 5
+
+
+state 57
+	initialized_declarator_list :  initialized_declarator_list COMMA_initialized_declarator 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 19
+	.  error
+
+	identifier  goto 29
+	initialized_declarator  goto 164
+	declarator  goto 142
+	pointer_declarator  goto 11
+	pointer  goto 17
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+
+state 58
+	function_def_specifier :  declaration_specifiers declarator declaration_list_    (140)
+	declaration_list :  declaration_list_decl 
+
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	.  reduce 140
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	decl  goto 141
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+
+state 59
+	compound_statement :  OPEN_CBRACE declaration_or_statement_list_CLOSE_CBRACE 
+	declaration_or_statement_list :  declaration_or_statement_list_declaration_or_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	SHORT  shift 22
+	GOTO  shift 84
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	IF  shift 88
+	CHAR  shift 27
+	INT  shift 24
+	CONTINUE  shift 82
+	LONG  shift 25
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	CLOSE_CBRACE  shift 165
+	SEMICOLON  shift 85
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 93
+	decl  goto 62
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 63
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	declaration_or_statement  goto 166
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 60
+	compound_statement :  OPEN_CBRACE CLOSE_CBRACE_    (179)
+
+	.  reduce 179
+
+
+state 61
+	declaration_or_statement_list :  declaration_or_statement_    (194)
+
+	.  reduce 194
+
+
+state 62
+	declaration_or_statement :  decl_    (192)
+
+	.  reduce 192
+
+
+state 63
+	declaration_or_statement :  statement_    (193)
+
+	.  reduce 193
+
+
+state 64
+	statement :  expression_statement_    (163)
+
+	.  reduce 163
+
+
+state 65
+	statement :  labeled_statement_    (164)
+
+	.  reduce 164
+
+
+state 66
+	statement :  compound_statement_    (165)
+
+	.  reduce 165
+
+
+state 67
+	statement :  conditional_statement_    (166)
+
+	.  reduce 166
+
+
+state 68
+	statement :  iterative_statement_    (167)
+
+	.  reduce 167
+
+
+state 69
+	statement :  break_statement_    (168)
+
+	.  reduce 168
+
+
+state 70
+	statement :  continue_statement_    (169)
+
+	.  reduce 169
+
+
+state 71
+	statement :  return_statement_    (170)
+
+	.  reduce 170
+
+
+state 72
+	statement :  goto_statement_    (171)
+
+	.  reduce 171
+
+
+state 73
+	statement :  null_statement_    (172)
+
+	.  reduce 172
+
+
+state 74
+	expression_statement :  expr_SEMICOLON 
+
+	SEMICOLON  shift 167
+	.  error
+
+
+state 75
+	labeled_statement :  label_COLON statement 
+
+	COLON  shift 168
+	.  error
+
+
+state 76
+	conditional_statement :  if_statement_    (180)
+
+	.  reduce 180
+
+
+state 77
+	conditional_statement :  if_else_statement_    (181)
+
+	.  reduce 181
+
+
+state 78
+	iterative_statement :  while_statement_    (149)
+
+	.  reduce 149
+
+
+state 79
+	iterative_statement :  do_statement_    (150)
+
+	.  reduce 150
+
+
+state 80
+	iterative_statement :  for_statement_    (151)
+
+	.  reduce 151
+
+
+state 81
+	break_statement :  BREAK_SEMICOLON 
+
+	SEMICOLON  shift 169
+	.  error
+
+
+state 82
+	continue_statement :  CONTINUE_SEMICOLON 
+
+	SEMICOLON  shift 170
+	.  error
+
+
+state 83
+	return_statement :  RET_SEMICOLON 
+	return_statement :  RET_expr SEMICOLON 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	SEMICOLON  shift 171
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 172
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 84
+	goto_statement :  GOTO_named_label SEMICOLON 
+
+	Id  shift 30
+	.  error
+
+	identifier  goto 174
+	named_label  goto 173
+
+state 85
+	null_statement :  SEMICOLON_    (155)
+
+	.  reduce 155
+
+
+state 86
+	expr :  comma_expr_    (116)
+	comma_expr :  comma_expr_COMMA assignment_expr 
+
+	COMMA  shift 175
+	.  reduce 116
+
+
+state 87
+	label :  named_label_    (152)
+
+	.  reduce 152
+
+
+state 88
+	if_else_statement :  IF_OPEN_BRACE expr CLOSE_BRACE statement ELSE statement 
+	if_statement :  IF_OPEN_BRACE expr CLOSE_BRACE statement 
+
+	OPEN_BRACE  shift 176
+	.  error
+
+
+state 89
+	while_statement :  WHILE_OPEN_BRACE expr CLOSE_BRACE statement 
+
+	OPEN_BRACE  shift 177
+	.  error
+
+
+state 90
+	do_statement :  DO_statement WHILE OPEN_BRACE expr CLOSE_BRACE SEMICOLON 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 178
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 91
+	for_statement :  FOR_for_expr statement 
+
+	OPEN_BRACE  shift 180
+	.  error
+
+	for_expr  goto 179
+
+state 92
+	comma_expr :  assignment_expr_    (117)
+
+	.  reduce 117
+
+
+state 93
+	primary_expr :  identifier_    (109)
+	named_label :  identifier_    (154)
+
+	COLON  reduce 154
+	.  reduce 109
+
+
+state 94
+	assignment_expr :  conditional_expr_    (119)
+
+	.  reduce 119
+
+
+state 95
+	cast_expr :  unary_expr_    (85)
+	assignment_expr :  unary_expr_assignment_op assignment_expr 
+
+	NOT_EQ  shift 193
+	EQ  shift 182
+	ADD_EQ  shift 183
+	SUB_EQ  shift 184
+	MUL_EQ  shift 185
+	DIV_EQ  shift 186
+	MOD_EQ  shift 187
+	LS_EQ  shift 188
+	RS_EQ  shift 189
+	AND_EQ  shift 190
+	XOR_EQ  shift 191
+	OR_EQ  shift 192
+	.  reduce 85
+
+	assignment_op  goto 181
+
+state 96
+	conditional_expr :  logical_or_expr_    (52)
+	conditional_expr :  logical_or_expr_QES expr COLON conditional_expr 
+	logical_or_expr :  logical_or_expr_BOOL_OR logical_and_expr 
+
+	BOOL_OR  shift 195
+	QES  shift 194
+	.  reduce 52
+
+
+state 97
+	unary_expr :  postfix_expr_    (87)
+	post_increment_expr :  postfix_expr_INC 
+	post_decrement_expr :  postfix_expr_DEC 
+	subscript_expr :  postfix_expr_OPEN_BRACKET expr CLOSE_BRACKET 
+	function_call :  postfix_expr_OPEN_BRACE CLOSE_BRACE 
+	function_call :  postfix_expr_OPEN_BRACE expression_list CLOSE_BRACE 
+
+	INC  shift 196
+	DEC  shift 197
+	OPEN_BRACE  shift 199
+	OPEN_BRACKET  shift 198
+	.  reduce 87
+
+
+state 98
+	unary_expr :  unary_minus_expr_    (88)
+
+	.  reduce 88
+
+
+state 99
+	unary_expr :  unary_plus_expr_    (89)
+
+	.  reduce 89
+
+
+state 100
+	unary_expr :  logical_negation_expr_    (90)
+
+	.  reduce 90
+
+
+state 101
+	unary_expr :  bitwise_negation_expr_    (91)
+
+	.  reduce 91
+
+
+state 102
+	unary_expr :  address_expr_    (92)
+
+	.  reduce 92
+
+
+state 103
+	unary_expr :  indirection_expr_    (93)
+
+	.  reduce 93
+
+
+state 104
+	unary_expr :  preincrement_expr_    (94)
+
+	.  reduce 94
+
+
+state 105
+	unary_expr :  predecrement_expr_    (95)
+
+	.  reduce 95
+
+
+state 106
+	logical_or_expr :  logical_and_expr_    (54)
+	logical_and_expr :  logical_and_expr_BOOL_AND bitwise_or_expr 
+
+	BOOL_AND  shift 200
+	.  reduce 54
+
+
+state 107
+	postfix_expr :  primary_expr_    (104)
+
+	.  reduce 104
+
+
+state 108
+	postfix_expr :  subscript_expr_    (105)
+
+	.  reduce 105
+
+
+state 109
+	postfix_expr :  function_call_    (106)
+
+	.  reduce 106
+
+
+state 110
+	postfix_expr :  post_increment_expr_    (107)
+
+	.  reduce 107
+
+
+state 111
+	postfix_expr :  post_decrement_expr_    (108)
+
+	.  reduce 108
+
+
+state 112
+	unary_minus_expr :  SUB_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 201
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 113
+	unary_plus_expr :  ADD_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 203
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 114
+	logical_negation_expr :  NOT_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 204
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 115
+	bitwise_negation_expr :  COM_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 205
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 116
+	address_expr :  AND_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 206
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 117
+	indirection_expr :  mul_op_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 207
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 118
+	preincrement_expr :  INC_unary_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 209
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	unary_expr  goto 208
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 119
+	predecrement_expr :  DEC_unary_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 209
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	unary_expr  goto 210
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 120
+	logical_and_expr :  bitwise_or_expr_    (56)
+	bitwise_or_expr :  bitwise_or_expr_OR bitwise_xor_expr 
+
+	OR  shift 211
+	.  reduce 56
+
+
+state 121
+	primary_expr :  constant_    (110)
+
+	.  reduce 110
+
+
+state 122
+	primary_expr :  paranthesized_expr_    (111)
+
+	.  reduce 111
+
+
+state 123
+	mul_op :  MUL_    (82)
+
+	.  reduce 82
+
+
+state 124
+	mul_op :  DIV_    (83)
+
+	.  reduce 83
+
+
+state 125
+	mul_op :  MOD_    (84)
+
+	.  reduce 84
+
+
+state 126
+	bitwise_or_expr :  bitwise_xor_expr_    (58)
+
+	.  reduce 58
+
+
+state 127
+	constant :  integer_constant_    (182)
+
+	.  reduce 182
+
+
+state 128
+	constant :  character_constant_    (183)
+
+	.  reduce 183
+
+
+state 129
+	constant :  string_constant_    (184)
+
+	.  reduce 184
+
+
+state 130
+	cast_expr :  OPEN_BRACE_type_name CLOSE_BRACE cast_expr 
+	paranthesized_expr :  OPEN_BRACE_expr CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 130
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 149
+	declaration_specifiers  goto 214
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 213
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	type_name  goto 212
+
+state 131
+	bitwise_xor_expr :  bitwise_and_expr_    (60)
+	bitwise_xor_expr :  bitwise_and_expr_XOR bitwise_and_expr 
+	bitwise_and_expr :  bitwise_and_expr_AND equality_expr 
+
+	AND  shift 216
+	XOR  shift 215
+	.  reduce 60
+
+
+state 132
+	integer_constant :  Integer_    (185)
+
+	.  reduce 185
+
+
+state 133
+	character_constant :  Character_    (186)
+
+	.  reduce 186
+
+
+state 134
+	string_constant :  String_    (187)
+
+	.  reduce 187
+
+
+state 135
+	bitwise_and_expr :  equality_expr_    (62)
+	equality_expr :  equality_expr_COMP relational_expr 
+
+	COMP  shift 217
+	.  reduce 62
+
+
+state 136
+	equality_expr :  relational_expr_    (64)
+	relational_expr :  relational_expr_relational_op shift_expr 
+
+	LT  shift 219
+	GT  shift 221
+	LT_EQ  shift 220
+	GT_EQ  shift 222
+	.  reduce 64
+
+	relational_op  goto 218
+
+state 137
+	relational_expr :  shift_expr_    (66)
+	shift_expr :  shift_expr_shift_op additive_expr 
+
+	LS  shift 224
+	RS  shift 225
+	.  reduce 66
+
+	shift_op  goto 223
+
+state 138
+	shift_expr :  additive_expr_    (72)
+	additive_expr :  additive_expr_add_op multiplicative_expr 
+
+	ADD  shift 227
+	SUB  shift 228
+	.  reduce 72
+
+	add_op  goto 226
+
+state 139
+	additive_expr :  multiplicative_expr_    (76)
+	multiplicative_expr :  multiplicative_expr_mul_op cast_expr 
+
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	.  reduce 76
+
+	mul_op  goto 229
+
+state 140
+	multiplicative_expr :  cast_expr_    (80)
+
+	.  reduce 80
+
+
+state 141
+	declaration_list :  declaration_list decl_    (191)
+
+	.  reduce 191
+
+
+state 142
+	initialized_declarator :  declarator_    (36)
+
+	.  reduce 36
+
+
+state 143
+	array_declarator :  direct_declarator OPEN_BRACKET CLOSE_BRACKET_    (47)
+
+	.  reduce 47
+
+
+state 144
+	array_declarator :  direct_declarator OPEN_BRACKET constant_expr_CLOSE_BRACKET 
+
+	CLOSE_BRACKET  shift 230
+	.  error
+
+
+145: reduce/reduce conflict (red'ns 49 and 82 ) on OPEN_BRACE
+state 145
+	array_declarator :  direct_declarator OPEN_BRACKET MUL_    (49)
+	mul_op :  MUL_    (82)
+
+	SHORT  reduce 49
+	SIGNED  reduce 49
+	UNSIGNED  reduce 49
+	VOID  reduce 49
+	CHAR  reduce 49
+	INT  reduce 49
+	LONG  reduce 49
+	OPEN_BRACE  reduce 49
+	CLOSE_BRACE  reduce 49
+	OPEN_BRACKET  reduce 49
+	OPEN_CBRACE  reduce 49
+	COMMA  reduce 49
+	SEMICOLON  reduce 49
+	.  reduce 82
+
+
+state 146
+	array_declarator :  direct_declarator OPEN_BRACKET array_size_expr_CLOSE_BRACKET 
+
+	CLOSE_BRACKET  shift 231
+	.  error
+
+
+147: reduce/reduce conflict (red'ns 51 and 119 ) on CLOSE_BRACKET
+147: reduce/reduce conflict (red'ns 51 and 188 ) on CLOSE_BRACKET
+state 147
+	constant_expr :  conditional_expr_    (51)
+	assignment_expr :  conditional_expr_    (119)
+	constant_expr :  conditional_expr_    (188)
+
+	.  reduce 51
+
+
+state 148
+	array_size_expr :  assignment_expr_    (200)
+
+	.  reduce 200
+
+
+state 149
+	primary_expr :  identifier_    (109)
+
+	.  reduce 109
+
+
+state 150
+	function_declarator :  direct_declarator OPEN_BRACE parameter_type_list_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 232
+	.  error
+
+
+state 151
+	parameter_list :  parameter_list_COMMA parameter_decl 
+	parameter_type_list :  parameter_list_    (162)
+
+	COMMA  shift 233
+	.  reduce 162
+
+
+state 152
+	parameter_list :  parameter_decl_    (160)
+
+	.  reduce 160
+
+
+state 153
+	parameter_decl :  declaration_specifiers_declarator 
+	parameter_decl :  declaration_specifiers_    (157)
+	parameter_decl :  declaration_specifiers_abstract_decl 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 237
+	OPEN_BRACKET  shift 158
+	.  reduce 157
+
+	identifier  goto 29
+	declarator  goto 234
+	pointer_declarator  goto 11
+	pointer  goto 236
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+	abstract_decl  goto 235
+	direct_abstract_decl  goto 156
+
+state 154
+	parameter_decl :  abstract_decl_    (159)
+
+	.  reduce 159
+
+
+state 155
+	abstract_decl :  pointer_    (174)
+	abstract_decl :  pointer_direct_abstract_decl 
+
+	OPEN_BRACE  shift 157
+	OPEN_BRACKET  shift 158
+	.  reduce 174
+
+	direct_abstract_decl  goto 238
+
+state 156
+	abstract_decl :  direct_abstract_decl_    (175)
+	direct_abstract_decl :  direct_abstract_decl_OPEN_BRACKET constant_expr CLOSE_BRACKET 
+
+	OPEN_BRACKET  shift 239
+	.  reduce 175
+
+
+state 157
+	direct_abstract_decl :  OPEN_BRACE_abstract_decl CLOSE_BRACE 
+
+	MUL  shift 28
+	OPEN_BRACE  shift 157
+	OPEN_BRACKET  shift 158
+	.  error
+
+	pointer  goto 155
+	abstract_decl  goto 240
+	direct_abstract_decl  goto 156
+
+state 158
+	direct_abstract_decl :  OPEN_BRACKET_constant_expr CLOSE_BRACKET 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	constant_expr  goto 241
+	conditional_expr  goto 242
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 159
+	direct_declarator :  OPEN_BRACE declarator CLOSE_BRACE_    (43)
+
+	.  reduce 43
+
+
+state 160
+	signed_type_specifier :  SIGNED SHORT INT_    (16)
+
+	.  reduce 16
+
+
+state 161
+	signed_type_specifier :  SIGNED LONG INT_    (23)
+
+	.  reduce 23
+
+
+state 162
+	unsigned_type_specifier :  UNSIGNED SHORT INT_    (26)
+
+	.  reduce 26
+
+
+state 163
+	unsigned_type_specifier :  UNSIGNED LONG INT_    (30)
+
+	.  reduce 30
+
+
+state 164
+	initialized_declarator_list :  initialized_declarator_list COMMA initialized_declarator_    (35)
+
+	.  reduce 35
+
+
+state 165
+	compound_statement :  OPEN_CBRACE declaration_or_statement_list CLOSE_CBRACE_    (178)
+
+	.  reduce 178
+
+
+state 166
+	declaration_or_statement_list :  declaration_or_statement_list declaration_or_statement_    (195)
+
+	.  reduce 195
+
+
+state 167
+	expression_statement :  expr SEMICOLON_    (197)
+
+	.  reduce 197
+
+
+state 168
+	labeled_statement :  label COLON_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 243
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 169
+	break_statement :  BREAK SEMICOLON_    (177)
+
+	.  reduce 177
+
+
+state 170
+	continue_statement :  CONTINUE SEMICOLON_    (189)
+
+	.  reduce 189
+
+
+state 171
+	return_statement :  RET SEMICOLON_    (201)
+
+	.  reduce 201
+
+
+state 172
+	return_statement :  RET expr_SEMICOLON 
+
+	SEMICOLON  shift 244
+	.  error
+
+
+state 173
+	goto_statement :  GOTO named_label_SEMICOLON 
+
+	SEMICOLON  shift 245
+	.  error
+
+
+state 174
+	named_label :  identifier_    (154)
+
+	.  reduce 154
+
+
+state 175
+	comma_expr :  comma_expr COMMA_assignment_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	assignment_expr  goto 246
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 176
+	if_else_statement :  IF OPEN_BRACE_expr CLOSE_BRACE statement ELSE statement 
+	if_statement :  IF OPEN_BRACE_expr CLOSE_BRACE statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 247
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 177
+	while_statement :  WHILE OPEN_BRACE_expr CLOSE_BRACE statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 248
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 178
+	do_statement :  DO statement_WHILE OPEN_BRACE expr CLOSE_BRACE SEMICOLON 
+
+	WHILE  shift 249
+	.  error
+
+
+state 179
+	for_statement :  FOR for_expr_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 250
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 180
+	for_expr :  OPEN_BRACE_SEMICOLON SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_initial_clause SEMICOLON SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_initial_clause SEMICOLON expr SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_initial_clause SEMICOLON expr SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_initial_clause SEMICOLON SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_SEMICOLON expr SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_SEMICOLON SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE_SEMICOLON expr SEMICOLON CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 130
+	SEMICOLON  shift 251
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	identifier  goto 149
+	decl  goto 254
+	declaration_specifiers  goto 40
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 253
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	initial_clause  goto 252
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 181
+	assignment_expr :  unary_expr assignment_op_assignment_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	assignment_expr  goto 255
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 182
+	assignment_op :  EQ_    (121)
+
+	.  reduce 121
+
+
+state 183
+	assignment_op :  ADD_EQ_    (122)
+
+	.  reduce 122
+
+
+state 184
+	assignment_op :  SUB_EQ_    (123)
+
+	.  reduce 123
+
+
+state 185
+	assignment_op :  MUL_EQ_    (124)
+
+	.  reduce 124
+
+
+state 186
+	assignment_op :  DIV_EQ_    (125)
+
+	.  reduce 125
+
+
+state 187
+	assignment_op :  MOD_EQ_    (126)
+
+	.  reduce 126
+
+
+state 188
+	assignment_op :  LS_EQ_    (127)
+
+	.  reduce 127
+
+
+state 189
+	assignment_op :  RS_EQ_    (128)
+
+	.  reduce 128
+
+
+state 190
+	assignment_op :  AND_EQ_    (129)
+
+	.  reduce 129
+
+
+state 191
+	assignment_op :  XOR_EQ_    (130)
+
+	.  reduce 130
+
+
+state 192
+	assignment_op :  OR_EQ_    (131)
+
+	.  reduce 131
+
+
+state 193
+	assignment_op :  NOT_EQ_    (132)
+
+	.  reduce 132
+
+
+state 194
+	conditional_expr :  logical_or_expr QES_expr COLON conditional_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 256
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 195
+	logical_or_expr :  logical_or_expr BOOL_OR_logical_and_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	logical_and_expr  goto 257
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 196
+	post_increment_expr :  postfix_expr INC_    (113)
+
+	.  reduce 113
+
+
+state 197
+	post_decrement_expr :  postfix_expr DEC_    (114)
+
+	.  reduce 114
+
+
+state 198
+	subscript_expr :  postfix_expr OPEN_BRACKET_expr CLOSE_BRACKET 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 258
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 199
+	function_call :  postfix_expr OPEN_BRACE_CLOSE_BRACE 
+	function_call :  postfix_expr OPEN_BRACE_expression_list CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACE  shift 259
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	assignment_expr  goto 261
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	expression_list  goto 260
+
+state 200
+	logical_and_expr :  logical_and_expr BOOL_AND_bitwise_or_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	bitwise_or_expr  goto 262
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 201
+	unary_minus_expr :  SUB cast_expr_    (96)
+
+	.  reduce 96
+
+
+state 202
+	cast_expr :  unary_expr_    (85)
+
+	.  reduce 85
+
+
+state 203
+	unary_plus_expr :  ADD cast_expr_    (97)
+
+	.  reduce 97
+
+
+state 204
+	logical_negation_expr :  NOT cast_expr_    (103)
+
+	.  reduce 103
+
+
+state 205
+	bitwise_negation_expr :  COM cast_expr_    (102)
+
+	.  reduce 102
+
+
+state 206
+	address_expr :  AND cast_expr_    (101)
+
+	.  reduce 101
+
+
+state 207
+	indirection_expr :  mul_op cast_expr_    (100)
+
+	.  reduce 100
+
+
+state 208
+	preincrement_expr :  INC unary_expr_    (99)
+
+	.  reduce 99
+
+
+state 209
+	paranthesized_expr :  OPEN_BRACE_expr CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 213
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 210
+	predecrement_expr :  DEC unary_expr_    (98)
+
+	.  reduce 98
+
+
+state 211
+	bitwise_or_expr :  bitwise_or_expr OR_bitwise_xor_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	bitwise_xor_expr  goto 263
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 212
+	cast_expr :  OPEN_BRACE type_name_CLOSE_BRACE cast_expr 
+
+	CLOSE_BRACE  shift 264
+	.  error
+
+
+state 213
+	paranthesized_expr :  OPEN_BRACE expr_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 265
+	.  error
+
+
+state 214
+	type_name :  declaration_specifiers_    (206)
+	type_name :  declaration_specifiers_abstract_decl 
+
+	MUL  shift 28
+	OPEN_BRACE  shift 157
+	OPEN_BRACKET  shift 158
+	.  reduce 206
+
+	pointer  goto 155
+	abstract_decl  goto 266
+	direct_abstract_decl  goto 156
+
+state 215
+	bitwise_xor_expr :  bitwise_and_expr XOR_bitwise_and_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	bitwise_and_expr  goto 267
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 216
+	bitwise_and_expr :  bitwise_and_expr AND_equality_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	equality_expr  goto 268
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 217
+	equality_expr :  equality_expr COMP_relational_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	relational_expr  goto 269
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 218
+	relational_expr :  relational_expr relational_op_shift_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	shift_expr  goto 270
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 219
+	relational_op :  LT_    (68)
+
+	.  reduce 68
+
+
+state 220
+	relational_op :  LT_EQ_    (69)
+
+	.  reduce 69
+
+
+state 221
+	relational_op :  GT_    (70)
+
+	.  reduce 70
+
+
+state 222
+	relational_op :  GT_EQ_    (71)
+
+	.  reduce 71
+
+
+state 223
+	shift_expr :  shift_expr shift_op_additive_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	additive_expr  goto 271
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 224
+	shift_op :  LS_    (74)
+
+	.  reduce 74
+
+
+state 225
+	shift_op :  RS_    (75)
+
+	.  reduce 75
+
+
+state 226
+	additive_expr :  additive_expr add_op_multiplicative_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	multiplicative_expr  goto 272
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 227
+	add_op :  ADD_    (78)
+
+	.  reduce 78
+
+
+state 228
+	add_op :  SUB_    (79)
+
+	.  reduce 79
+
+
+state 229
+	multiplicative_expr :  multiplicative_expr mul_op_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 273
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 230
+	array_declarator :  direct_declarator OPEN_BRACKET constant_expr CLOSE_BRACKET_    (48)
+
+	.  reduce 48
+
+
+state 231
+	array_declarator :  direct_declarator OPEN_BRACKET array_size_expr CLOSE_BRACKET_    (50)
+
+	.  reduce 50
+
+
+state 232
+	function_declarator :  direct_declarator OPEN_BRACE parameter_type_list CLOSE_BRACE_    (135)
+
+	.  reduce 135
+
+
+state 233
+	parameter_list :  parameter_list COMMA_parameter_decl 
+
+	MUL  shift 28
+	SHORT  shift 22
+	SIGNED  shift 23
+	UNSIGNED  shift 26
+	VOID  shift 16
+	CHAR  shift 27
+	INT  shift 24
+	LONG  shift 25
+	OPEN_BRACE  shift 157
+	OPEN_BRACKET  shift 158
+	.  error
+
+	void_type_specifier  goto 10
+	signed_type_specifier  goto 13
+	unsigned_type_specifier  goto 14
+	char_type_specifier  goto 15
+	declaration_specifiers  goto 153
+	type_specifier  goto 7
+	int_type_specifier  goto 9
+	pointer  goto 155
+	parameter_decl  goto 274
+	abstract_decl  goto 154
+	direct_abstract_decl  goto 156
+
+state 234
+	parameter_decl :  declaration_specifiers declarator_    (156)
+
+	.  reduce 156
+
+
+state 235
+	parameter_decl :  declaration_specifiers abstract_decl_    (158)
+
+	.  reduce 158
+
+
+state 236
+	pointer_declarator :  pointer_direct_declarator 
+	abstract_decl :  pointer_    (174)
+	abstract_decl :  pointer_direct_abstract_decl 
+
+	Id  shift 30
+	OPEN_BRACE  shift 237
+	OPEN_BRACKET  shift 158
+	.  reduce 174
+
+	identifier  goto 29
+	direct_declarator  goto 43
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+	direct_abstract_decl  goto 238
+
+state 237
+	direct_declarator :  OPEN_BRACE_declarator CLOSE_BRACE 
+	direct_abstract_decl :  OPEN_BRACE_abstract_decl CLOSE_BRACE 
+
+	MUL  shift 28
+	Id  shift 30
+	OPEN_BRACE  shift 237
+	OPEN_BRACKET  shift 158
+	.  error
+
+	identifier  goto 29
+	declarator  goto 44
+	pointer_declarator  goto 11
+	pointer  goto 236
+	direct_declarator  goto 12
+	simple_declarator  goto 18
+	array_declarator  goto 20
+	function_declarator  goto 21
+	abstract_decl  goto 240
+	direct_abstract_decl  goto 156
+
+state 238
+	abstract_decl :  pointer direct_abstract_decl_    (176)
+	direct_abstract_decl :  direct_abstract_decl_OPEN_BRACKET constant_expr CLOSE_BRACKET 
+
+	OPEN_BRACKET  shift 239
+	.  reduce 176
+
+
+state 239
+	direct_abstract_decl :  direct_abstract_decl OPEN_BRACKET_constant_expr CLOSE_BRACKET 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	constant_expr  goto 275
+	conditional_expr  goto 242
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 240
+	direct_abstract_decl :  OPEN_BRACE abstract_decl_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 276
+	.  error
+
+
+state 241
+	direct_abstract_decl :  OPEN_BRACKET constant_expr_CLOSE_BRACKET 
+
+	CLOSE_BRACKET  shift 277
+	.  error
+
+
+242: reduce/reduce conflict (red'ns 51 and 188 ) on CLOSE_BRACKET
+state 242
+	constant_expr :  conditional_expr_    (51)
+	constant_expr :  conditional_expr_    (188)
+
+	.  reduce 51
+
+
+state 243
+	labeled_statement :  label COLON statement_    (153)
+
+	.  reduce 153
+
+
+state 244
+	return_statement :  RET expr SEMICOLON_    (202)
+
+	.  reduce 202
+
+
+state 245
+	goto_statement :  GOTO named_label SEMICOLON_    (141)
+
+	.  reduce 141
+
+
+state 246
+	comma_expr :  comma_expr COMMA assignment_expr_    (118)
+
+	.  reduce 118
+
+
+state 247
+	if_else_statement :  IF OPEN_BRACE expr_CLOSE_BRACE statement ELSE statement 
+	if_statement :  IF OPEN_BRACE expr_CLOSE_BRACE statement 
+
+	CLOSE_BRACE  shift 278
+	.  error
+
+
+state 248
+	while_statement :  WHILE OPEN_BRACE expr_CLOSE_BRACE statement 
+
+	CLOSE_BRACE  shift 279
+	.  error
+
+
+state 249
+	do_statement :  DO statement WHILE_OPEN_BRACE expr CLOSE_BRACE SEMICOLON 
+
+	OPEN_BRACE  shift 280
+	.  error
+
+
+state 250
+	for_statement :  FOR for_expr statement_    (208)
+
+	.  reduce 208
+
+
+state 251
+	for_expr :  OPEN_BRACE SEMICOLON_SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON_expr SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON_SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON_expr SEMICOLON CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	SEMICOLON  shift 281
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 282
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 252
+	for_expr :  OPEN_BRACE initial_clause_SEMICOLON SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause_SEMICOLON expr SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause_SEMICOLON expr SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause_SEMICOLON SEMICOLON expr CLOSE_BRACE 
+
+	SEMICOLON  shift 283
+	.  error
+
+
+state 253
+	initial_clause :  expr_    (147)
+
+	.  reduce 147
+
+
+state 254
+	initial_clause :  decl_    (148)
+
+	.  reduce 148
+
+
+state 255
+	assignment_expr :  unary_expr assignment_op assignment_expr_    (120)
+
+	.  reduce 120
+
+
+state 256
+	conditional_expr :  logical_or_expr QES expr_COLON conditional_expr 
+
+	COLON  shift 284
+	.  error
+
+
+state 257
+	logical_or_expr :  logical_or_expr BOOL_OR logical_and_expr_    (55)
+	logical_and_expr :  logical_and_expr_BOOL_AND bitwise_or_expr 
+
+	BOOL_AND  shift 200
+	.  reduce 55
+
+
+state 258
+	subscript_expr :  postfix_expr OPEN_BRACKET expr_CLOSE_BRACKET 
+
+	CLOSE_BRACKET  shift 285
+	.  error
+
+
+state 259
+	function_call :  postfix_expr OPEN_BRACE CLOSE_BRACE_    (133)
+
+	.  reduce 133
+
+
+state 260
+	function_call :  postfix_expr OPEN_BRACE expression_list_CLOSE_BRACE 
+	expression_list :  expression_list_COMMA assignment_expr 
+
+	CLOSE_BRACE  shift 286
+	COMMA  shift 287
+	.  error
+
+
+state 261
+	expression_list :  assignment_expr_    (198)
+
+	.  reduce 198
+
+
+state 262
+	logical_and_expr :  logical_and_expr BOOL_AND bitwise_or_expr_    (57)
+	bitwise_or_expr :  bitwise_or_expr_OR bitwise_xor_expr 
+
+	OR  shift 211
+	.  reduce 57
+
+
+state 263
+	bitwise_or_expr :  bitwise_or_expr OR bitwise_xor_expr_    (59)
+
+	.  reduce 59
+
+
+state 264
+	cast_expr :  OPEN_BRACE type_name CLOSE_BRACE_cast_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	mul_op  goto 117
+	cast_expr  goto 288
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 265
+	paranthesized_expr :  OPEN_BRACE expr CLOSE_BRACE_    (112)
+
+	.  reduce 112
+
+
+state 266
+	type_name :  declaration_specifiers abstract_decl_    (207)
+
+	.  reduce 207
+
+
+state 267
+	bitwise_xor_expr :  bitwise_and_expr XOR bitwise_and_expr_    (61)
+	bitwise_and_expr :  bitwise_and_expr_AND equality_expr 
+
+	AND  shift 216
+	.  reduce 61
+
+
+state 268
+	bitwise_and_expr :  bitwise_and_expr AND equality_expr_    (63)
+	equality_expr :  equality_expr_COMP relational_expr 
+
+	COMP  shift 217
+	.  reduce 63
+
+
+state 269
+	equality_expr :  equality_expr COMP relational_expr_    (65)
+	relational_expr :  relational_expr_relational_op shift_expr 
+
+	LT  shift 219
+	GT  shift 221
+	LT_EQ  shift 220
+	GT_EQ  shift 222
+	.  reduce 65
+
+	relational_op  goto 218
+
+state 270
+	relational_expr :  relational_expr relational_op shift_expr_    (67)
+	shift_expr :  shift_expr_shift_op additive_expr 
+
+	LS  shift 224
+	RS  shift 225
+	.  reduce 67
+
+	shift_op  goto 223
+
+state 271
+	shift_expr :  shift_expr shift_op additive_expr_    (73)
+	additive_expr :  additive_expr_add_op multiplicative_expr 
+
+	ADD  shift 227
+	SUB  shift 228
+	.  reduce 73
+
+	add_op  goto 226
+
+state 272
+	additive_expr :  additive_expr add_op multiplicative_expr_    (77)
+	multiplicative_expr :  multiplicative_expr_mul_op cast_expr 
+
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	.  reduce 77
+
+	mul_op  goto 229
+
+state 273
+	multiplicative_expr :  multiplicative_expr mul_op cast_expr_    (81)
+
+	.  reduce 81
+
+
+state 274
+	parameter_list :  parameter_list COMMA parameter_decl_    (161)
+
+	.  reduce 161
+
+
+state 275
+	direct_abstract_decl :  direct_abstract_decl OPEN_BRACKET constant_expr_CLOSE_BRACKET 
+
+	CLOSE_BRACKET  shift 289
+	.  error
+
+
+state 276
+	direct_abstract_decl :  OPEN_BRACE abstract_decl CLOSE_BRACE_    (203)
+
+	.  reduce 203
+
+
+state 277
+	direct_abstract_decl :  OPEN_BRACKET constant_expr CLOSE_BRACKET_    (204)
+
+	.  reduce 204
+
+
+state 278
+	if_else_statement :  IF OPEN_BRACE expr CLOSE_BRACE_statement ELSE statement 
+	if_statement :  IF OPEN_BRACE expr CLOSE_BRACE_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 290
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 279
+	while_statement :  WHILE OPEN_BRACE expr CLOSE_BRACE_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 291
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 280
+	do_statement :  DO statement WHILE OPEN_BRACE_expr CLOSE_BRACE SEMICOLON 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 292
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 281
+	for_expr :  OPEN_BRACE SEMICOLON SEMICOLON_CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON SEMICOLON_expr CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACE  shift 293
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 294
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 282
+	for_expr :  OPEN_BRACE SEMICOLON expr_SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON expr_SEMICOLON CLOSE_BRACE 
+
+	SEMICOLON  shift 295
+	.  error
+
+
+state 283
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON_SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON_expr SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON_expr SEMICOLON CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON_SEMICOLON expr CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	SEMICOLON  shift 296
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 297
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 284
+	conditional_expr :  logical_or_expr QES expr COLON_conditional_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 298
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 202
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 285
+	subscript_expr :  postfix_expr OPEN_BRACKET expr CLOSE_BRACKET_    (115)
+
+	.  reduce 115
+
+
+state 286
+	function_call :  postfix_expr OPEN_BRACE expression_list CLOSE_BRACE_    (134)
+
+	.  reduce 134
+
+
+state 287
+	expression_list :  expression_list COMMA_assignment_expr 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	assignment_expr  goto 299
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 288
+	cast_expr :  OPEN_BRACE type_name CLOSE_BRACE cast_expr_    (86)
+
+	.  reduce 86
+
+
+state 289
+	direct_abstract_decl :  direct_abstract_decl OPEN_BRACKET constant_expr CLOSE_BRACKET_    (205)
+
+	.  reduce 205
+
+
+290: shift/reduce conflict (shift 300, red'n 146) on ELSE
+state 290
+	if_else_statement :  IF OPEN_BRACE expr CLOSE_BRACE statement_ELSE statement 
+	if_statement :  IF OPEN_BRACE expr CLOSE_BRACE statement_    (146)
+
+	ELSE  shift 300
+	.  reduce 146
+
+
+state 291
+	while_statement :  WHILE OPEN_BRACE expr CLOSE_BRACE statement_    (173)
+
+	.  reduce 173
+
+
+state 292
+	do_statement :  DO statement WHILE OPEN_BRACE expr_CLOSE_BRACE SEMICOLON 
+
+	CLOSE_BRACE  shift 301
+	.  error
+
+
+state 293
+	for_expr :  OPEN_BRACE SEMICOLON SEMICOLON CLOSE_BRACE_    (209)
+
+	.  reduce 209
+
+
+state 294
+	for_expr :  OPEN_BRACE SEMICOLON SEMICOLON expr_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 302
+	.  error
+
+
+state 295
+	for_expr :  OPEN_BRACE SEMICOLON expr SEMICOLON_expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE SEMICOLON expr SEMICOLON_CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACE  shift 304
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 303
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 296
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON SEMICOLON_CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON SEMICOLON_expr CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACE  shift 305
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 306
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 297
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr_SEMICOLON expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr_SEMICOLON CLOSE_BRACE 
+
+	SEMICOLON  shift 307
+	.  error
+
+
+state 298
+	conditional_expr :  logical_or_expr QES expr COLON conditional_expr_    (53)
+
+	.  reduce 53
+
+
+state 299
+	expression_list :  expression_list COMMA assignment_expr_    (199)
+
+	.  reduce 199
+
+
+state 300
+	if_else_statement :  IF OPEN_BRACE expr CLOSE_BRACE statement ELSE_statement 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	DO  shift 90
+	FOR  shift 91
+	RET  shift 83
+	BREAK  shift 81
+	GOTO  shift 84
+	IF  shift 88
+	CONTINUE  shift 82
+	WHILE  shift 89
+	OPEN_BRACE  shift 130
+	OPEN_CBRACE  shift 36
+	SEMICOLON  shift 85
+	.  error
+
+	identifier  goto 93
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 74
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	goto_statement  goto 72
+	if_else_statement  goto 77
+	if_statement  goto 76
+	iterative_statement  goto 68
+	label  goto 75
+	labeled_statement  goto 65
+	named_label  goto 87
+	null_statement  goto 73
+	statement  goto 308
+	while_statement  goto 78
+	break_statement  goto 69
+	compound_statement  goto 66
+	conditional_statement  goto 67
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+	continue_statement  goto 70
+	do_statement  goto 79
+	expression_statement  goto 64
+	for_statement  goto 80
+	return_statement  goto 71
+
+state 301
+	do_statement :  DO statement WHILE OPEN_BRACE expr CLOSE_BRACE_SEMICOLON 
+
+	SEMICOLON  shift 309
+	.  error
+
+
+state 302
+	for_expr :  OPEN_BRACE SEMICOLON SEMICOLON expr CLOSE_BRACE_    (215)
+
+	.  reduce 215
+
+
+state 303
+	for_expr :  OPEN_BRACE SEMICOLON expr SEMICOLON expr_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 310
+	.  error
+
+
+state 304
+	for_expr :  OPEN_BRACE SEMICOLON expr SEMICOLON CLOSE_BRACE_    (216)
+
+	.  reduce 216
+
+
+state 305
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON SEMICOLON CLOSE_BRACE_    (210)
+
+	.  reduce 210
+
+
+state 306
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON SEMICOLON expr_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 311
+	.  error
+
+
+state 307
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr SEMICOLON_expr CLOSE_BRACE 
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr SEMICOLON_CLOSE_BRACE 
+
+	INC  shift 118
+	DEC  shift 119
+	COM  shift 115
+	NOT  shift 114
+	AND  shift 116
+	MUL  shift 123
+	DIV  shift 124
+	MOD  shift 125
+	ADD  shift 113
+	SUB  shift 112
+	Id  shift 30
+	Integer  shift 132
+	Character  shift 133
+	String  shift 134
+	OPEN_BRACE  shift 130
+	CLOSE_BRACE  shift 313
+	.  error
+
+	identifier  goto 149
+	conditional_expr  goto 94
+	logical_or_expr  goto 96
+	logical_and_expr  goto 106
+	bitwise_or_expr  goto 120
+	bitwise_xor_expr  goto 126
+	bitwise_and_expr  goto 131
+	equality_expr  goto 135
+	relational_expr  goto 136
+	shift_expr  goto 137
+	additive_expr  goto 138
+	multiplicative_expr  goto 139
+	mul_op  goto 117
+	cast_expr  goto 140
+	unary_expr  goto 95
+	unary_minus_expr  goto 98
+	unary_plus_expr  goto 99
+	predecrement_expr  goto 105
+	preincrement_expr  goto 104
+	indirection_expr  goto 103
+	address_expr  goto 102
+	bitwise_negation_expr  goto 101
+	logical_negation_expr  goto 100
+	postfix_expr  goto 97
+	primary_expr  goto 107
+	paranthesized_expr  goto 122
+	post_increment_expr  goto 110
+	post_decrement_expr  goto 111
+	subscript_expr  goto 108
+	expr  goto 312
+	comma_expr  goto 86
+	assignment_expr  goto 92
+	function_call  goto 109
+	constant  goto 121
+	integer_constant  goto 127
+	character_constant  goto 128
+	string_constant  goto 129
+
+state 308
+	if_else_statement :  IF OPEN_BRACE expr CLOSE_BRACE statement ELSE statement_    (145)
+
+	.  reduce 145
+
+
+state 309
+	do_statement :  DO statement WHILE OPEN_BRACE expr CLOSE_BRACE SEMICOLON_    (196)
+
+	.  reduce 196
+
+
+state 310
+	for_expr :  OPEN_BRACE SEMICOLON expr SEMICOLON expr CLOSE_BRACE_    (214)
+
+	.  reduce 214
+
+
+state 311
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON SEMICOLON expr CLOSE_BRACE_    (213)
+
+	.  reduce 213
+
+
+state 312
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr SEMICOLON expr_CLOSE_BRACE 
+
+	CLOSE_BRACE  shift 314
+	.  error
+
+
+state 313
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr SEMICOLON CLOSE_BRACE_    (212)
+
+	.  reduce 212
+
+
+state 314
+	for_expr :  OPEN_BRACE initial_clause SEMICOLON expr SEMICOLON expr CLOSE_BRACE_    (211)
+
+	.  reduce 211
+
+Rule not reduced:   identifier_list :  identifier 
+Rule not reduced:   identifier_list :  parameter_list COMMA identifier 
+Rule not reduced:   constant_expr :  conditional_expr 
+
+83/3000 terminals, 95/1000 nonterminals
+217/2000 grammar rules, 315/5000 states
+15 shift/reduce, 4 reduce/reduce conflicts reported
+137/1400 working sets used
+memory: states,etc. 2596/40000, parser 3057/70000
+208/600 distinct lookahead sets
+163 extra closures
+1090 shift entries, 16 exceptions
+228 goto entries
+1758 entries saved by goto default
+Optimizer space used: input 2543/40000, output 861/70000
+861 table entries, 184 zero
+maximum spread: 337, maximum offset: 337
